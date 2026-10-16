@@ -141,12 +141,10 @@
   <!-- =========================================================================
        🎵 BACKGROUND MUSIC CONFIGURATION SECTION:
        To add your own MP3 background song:
-       1. Put your mp3 file in the same folder as this index.html file (e.g. 'background.mp3')
+       1. Place your mp3 file in the root folder alongside index.html (e.g. 'background.mp3')
        2. Change the 'src' value below to match your filename.
-       3. You can also adjust default volume in the JavaScript below (default: 0.35).
        ========================================================================= -->
   <audio id="bg-music" loop preload="auto">
-    <!-- PUT YOUR MP3 FILE PATH HERE (Example: "audio/bg-song.mp3" or "background.mp3") -->
     <source src="background.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
@@ -200,7 +198,7 @@
           Snakes & Ladders Zakat Game
         </h2>
         <p class="text-stone-300 text-sm mt-1 max-w-md mx-auto">
-          Pass through 50 steps on a single device. Roll the dice, answer Zakat questions, climb virtues, and watch out for 7 snakes!
+          Play together on a single device (1 to 4 players). Roll the dice, solve randomized Zakat questions, climb virtues, and avoid 7 slippery snakes!
         </p>
       </div>
 
@@ -509,12 +507,10 @@
     let audioCtx = null;
     const bgAudio = document.getElementById('bg-music');
 
-    // Default music volume setting
     if (bgAudio) {
       bgAudio.volume = 0.35;
     }
 
-    // Toggle Background MP3 Music
     function toggleMusic() {
       if (!bgAudio) return;
       if (isMusicPlaying) {
@@ -656,33 +652,31 @@
 
     // 7 Snakes: From head (high) to tail (low)
     const SNAKES_DATA = [
-      { from: 49, to: 28, color1: '#38bdf8', color2: '#0284c7', eye: '#0f172a' }, // Cyan Striped
-      { from: 45, to: 22, color1: '#f87171', color2: '#dc2626', eye: '#450a0a' }, // Red Striped
-      { from: 38, to: 17, color1: '#a3e635', color2: '#65a30d', eye: '#14532d' }, // Green Striped
-      { from: 32, to: 13, color1: '#fbbf24', color2: '#d97706', eye: '#78350f' }, // Amber Striped
-      { from: 27, to: 8,  color1: '#c084fc', color2: '#9333ea', eye: '#581c87' }, // Purple Striped
-      { from: 21, to: 4,  color1: '#34d399', color2: '#059669', eye: '#064e3b' }, // Emerald Striped
-      { from: 16, to: 5,  color1: '#fb923c', color2: '#ea580c', eye: '#7c2d12' }  // Orange Striped
+      { from: 49, to: 28, color1: '#38bdf8', color2: '#0284c7', eye: '#0f172a' },
+      { from: 45, to: 22, color1: '#f87171', color2: '#dc2626', eye: '#450a0a' },
+      { from: 38, to: 17, color1: '#a3e635', color2: '#65a30d', eye: '#14532d' },
+      { from: 32, to: 13, color1: '#fbbf24', color2: '#d97706', eye: '#78350f' },
+      { from: 27, to: 8,  color1: '#c084fc', color2: '#9333ea', eye: '#581c87' },
+      { from: 21, to: 4,  color1: '#34d399', color2: '#059669', eye: '#064e3b' },
+      { from: 16, to: 5,  color1: '#fb923c', color2: '#ea580c', eye: '#7c2d12' }
     ];
 
     // 6 Ladders: From base (low) to top (high)
     const LADDERS_DATA = [
-      { from: 3,  to: 18, color: '#facc15', rungColor: '#fef08a' }, // Yellow ladder
-      { from: 7,  to: 24, color: '#38bdf8', rungColor: '#bae6fd' }, // Cyan ladder
-      { from: 12, to: 31, color: '#f87171', rungColor: '#fecaca' }, // Red ladder
-      { from: 20, to: 39, color: '#4ade80', rungColor: '#bbf7d0' }, // Green ladder
-      { from: 26, to: 43, color: '#c084fc', rungColor: '#e9d5ff' }, // Purple ladder
-      { from: 34, to: 47, color: '#fb923c', rungColor: '#fed7aa' }  // Orange ladder
+      { from: 3,  to: 18, color: '#facc15', rungColor: '#fef08a' },
+      { from: 7,  to: 24, color: '#38bdf8', rungColor: '#bae6fd' },
+      { from: 12, to: 31, color: '#f87171', rungColor: '#fecaca' },
+      { from: 20, to: 39, color: '#4ade80', rungColor: '#bbf7d0' },
+      { from: 26, to: 43, color: '#c084fc', rungColor: '#e9d5ff' },
+      { from: 34, to: 47, color: '#fb923c', rungColor: '#fed7aa' }
     ];
 
-    // Quick lookup maps
     const SNAKES_MAP = {};
     SNAKES_DATA.forEach(s => SNAKES_MAP[s.from] = s.to);
 
     const LADDERS_MAP = {};
     LADDERS_DATA.forEach(l => LADDERS_MAP[l.from] = l.to);
 
-    // Player Token Avatars
     const AVATARS = [
       { id: 1, name: 'Player 1', symbol: '🦁', color: 'bg-amber-400 border-amber-600 text-stone-950', ring: 'ring-amber-400', badge: 'bg-amber-500/20 text-amber-300 border-amber-400' },
       { id: 2, name: 'Player 2', symbol: '🦅', color: 'bg-emerald-400 border-emerald-600 text-stone-950', ring: 'ring-emerald-400', badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-400' },
@@ -692,9 +686,9 @@
 
     // =========================================================================
     // 50 CURATED ZAKAT QUESTIONS (Covering all 50 Board Steps & Core Jurisprudence)
+    // NOTE: Choices are dynamically randomized (A, B, C, D) on presentation!
     // =========================================================================
     const QUESTION_BANK = [
-      // 1-10: Fundamentals, Pillars & Nisab
       {
         q: "Which Pillar of Islam does Zakat represent?",
         category: "Pillars of Islam",
@@ -780,8 +774,6 @@
         correct: 1,
         explanation: "Surah At-Tawbah 9:60 explicitly decrees the 8 divine categories of Zakat recipients directly from Allah."
       },
-
-      // 11-20: The 8 Asnaf Categories
       {
         q: "Who is classified as 'Fakir' (The Destitute) among the 8 Asnaf?",
         category: "8 Asnaf Groups",
@@ -902,8 +894,6 @@
         correct: 0,
         explanation: "One cannot pay obligatory Zakat to direct ascendants (parents/grandparents) or direct descendants (children) whom they are already obliged to support."
       },
-
-      // 21-30: Calculations, Fitrah & Exemptions
       {
         q: "If Amina has RM 40,000 in savings that has completed one full Haul, and Nisab is RM 25,000, how much Zakat must she pay?",
         category: "Calculation Practice",
@@ -1004,8 +994,6 @@
         correct: 0,
         explanation: "Because Zakat is an act of worship (Ibadah), having the intention (Niyyah) in the heart when setting aside or paying Zakat is an essential condition."
       },
-
-      // 31-40: Agriculture, Livestock & Modern Assets
       {
         q: "What is the Zakat rate on agricultural crops irrigated entirely naturally by rainfall or natural streams?",
         category: "Agricultural Zakat",
@@ -1062,7 +1050,7 @@
         q: "What is the primary condition regarding livestock grazing for Zakat to be mandatory?",
         category: "Livestock Zakat",
         options: [
-          "They must be Sa'imah (graze freely on natural open pastures for most of the year, not hand-fed for commercial dairy stall feed)",
+          "They must be Sa'imah (graze freely on natural open pastures for most of the year)",
           "They must be kept inside closed cages",
           "They must be used for plowing land daily",
           "They must be wild animals"
@@ -1101,8 +1089,6 @@
         correct: 0,
         explanation: "Most contemporary fatwas rule that EPF/retirement savings are subject to 2.5% Zakat once the employee completes withdrawal and takes full ownership."
       },
-
-      // 41-50: Advanced Principles, Ethics & Modern Applications
       {
         q: "How is Zakat calculated on shares or stocks purchased for short-term trading (speculation)?",
         category: "Stocks & Shares",
@@ -1225,7 +1211,6 @@
       }
     ];
 
-    // Game Runtime State
     let players = [];
     let currentPlayerIndex = 0;
     let roundNumber = 1;
@@ -1233,11 +1218,10 @@
     let activeQuestion = null;
     let pendingPlayerMove = null;
 
-    // Deterministic Grid Coordinate Engine (10 cols x 5 rows -> 1000 x 500)
     function getCellCenter(step) {
-      const rowFromBottom = Math.floor((step - 1) / GRID_COLS); // 0, 1, 2, 3, 4
-      const rowTop = (GRID_ROWS - 1) - rowFromBottom; // 4, 3, 2, 1, 0
-      const isReversed = (rowFromBottom % 2 !== 0); // odd rows reversed
+      const rowFromBottom = Math.floor((step - 1) / GRID_COLS);
+      const rowTop = (GRID_ROWS - 1) - rowFromBottom;
+      const isReversed = (rowFromBottom % 2 !== 0);
 
       const col = isReversed 
         ? (GRID_COLS - 1 - ((step - 1) % GRID_COLS))
@@ -1251,7 +1235,6 @@
       };
     }
 
-    // Player Setup
     function setPlayerCount(count) {
       document.querySelectorAll('.player-count-btn').forEach(btn => {
         const btnCount = parseInt(btn.dataset.count);
@@ -1289,8 +1272,7 @@
 
     function startGame() {
       initAudio();
-      
-      // Auto-attempt music playback on game start if supported
+
       if (!isMusicPlaying && bgAudio) {
         bgAudio.play().then(() => {
           isMusicPlaying = true;
@@ -1298,9 +1280,7 @@
           document.getElementById('music-label').textContent = 'Music: Playing';
           document.getElementById('btn-music-toggle').classList.remove('bg-stone-800', 'text-stone-300');
           document.getElementById('btn-music-toggle').classList.add('bg-amber-500/20', 'border-amber-400', 'text-amber-300');
-        }).catch(() => {
-          // Normal browser restriction or file not yet placed by user
-        });
+        }).catch(() => {});
       }
 
       const activeBtn = document.querySelector('.player-count-btn.active-count');
@@ -1336,7 +1316,6 @@
       updateScoreboard();
     }
 
-    // Build Checkered Board Grid
     function buildBoard() {
       const grid = document.getElementById('board-grid');
       const pawnsLayer = document.getElementById('pawns-layer');
@@ -1405,14 +1384,13 @@
       });
     }
 
-    // Draw Ladders & Cartoon Striped Snakes
     function drawSnakesAndLadders() {
       const laddersLayer = document.getElementById('ladders-layer');
       const snakesLayer = document.getElementById('snakes-layer');
       laddersLayer.innerHTML = '';
       snakesLayer.innerHTML = '';
 
-      // 1. LADDERS
+      // Ladders
       LADDERS_DATA.forEach(ladder => {
         const p1 = getCellCenter(ladder.from);
         const p2 = getCellCenter(ladder.to);
@@ -1457,7 +1435,7 @@
         laddersLayer.appendChild(g);
       });
 
-      // 2. SNAKES
+      // Snakes
       SNAKES_DATA.forEach((snake, sIndex) => {
         const head = getCellCenter(snake.from);
         const tail = getCellCenter(snake.to);
@@ -1510,7 +1488,6 @@
       });
     }
 
-    // UI Updates
     function updateTurnUI() {
       const current = players[currentPlayerIndex];
       document.getElementById('turn-round-counter').textContent = `Round ${roundNumber}`;
@@ -1556,7 +1533,6 @@
       });
     }
 
-    // 3D Dice Rotations
     const DICE_ROTATIONS = {
       1: { x: 0, y: 0 },
       2: { x: 0, y: -90 },
@@ -1611,11 +1587,35 @@
       }, 400);
     }
 
-    // Question Modal Handler (Picks corresponding question or random from 50)
+    // =========================================================================
+    // DYNAMIC OPTION RANDOMIZATION (Randomizes A, B, C, D equally every turn)
+    // =========================================================================
     function triggerStepQuestion(player, stepNumber) {
-      // Step-indexed question selection: each step gets a designated question from the 50 bank
       const questionIndex = Math.min(stepNumber - 1, QUESTION_BANK.length - 1);
-      activeQuestion = QUESTION_BANK[questionIndex];
+      const rawQuestion = QUESTION_BANK[questionIndex];
+
+      // Pair each option with whether it is the correct one
+      const pairedOptions = rawQuestion.options.map((optText, idx) => ({
+        text: optText,
+        isCorrect: (idx === rawQuestion.correct)
+      }));
+
+      // Fisher-Yates shuffle array to randomize option placement across A, B, C, D
+      for (let i = pairedOptions.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pairedOptions[i], pairedOptions[j]] = [pairedOptions[j], pairedOptions[i]];
+      }
+
+      // Re-map into activeQuestion structure
+      const newCorrectIndex = pairedOptions.findIndex(item => item.isCorrect);
+      activeQuestion = {
+        q: rawQuestion.q,
+        category: rawQuestion.category,
+        explanation: rawQuestion.explanation,
+        options: pairedOptions.map(item => item.text),
+        correct: newCorrectIndex
+      };
+
       pendingPlayerMove = { player, stepNumber };
 
       const modal = document.getElementById('question-modal');
@@ -1793,4 +1793,3 @@
   </script>
 </body>
 </html>
-```
